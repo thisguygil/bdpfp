@@ -1,0 +1,39 @@
+---
+# Service for Data Analysis
+apiVersion: v1
+kind: Service
+metadata:
+  name: analysis-service
+spec:
+  type: ClusterIP
+  selector:
+    app: twitter-data
+    component: analysis
+  ports:
+  - port: 8081
+    targetPort: 8081
+---
+# Service for Front-end Web UI
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: twitter-data
+    component: frontend
+  ports:
+  - port: 80
+    targetPort: 80
+---
+# Service for MySQL
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-service
+spec:
+  ports:
+  - port: 3306
+  selector:
+    app: mysql
